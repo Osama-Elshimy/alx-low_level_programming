@@ -21,7 +21,7 @@ int digit2 = 1;
 while (digit1 <= 8)
 {
 
-while(digit2 <= 9)
+while (digit2 <= 9)
 {
 putchar(digit1 + '0');
 putchar(digit2 + '0');
