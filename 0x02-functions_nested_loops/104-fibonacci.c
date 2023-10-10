@@ -5,26 +5,26 @@
  * Return: Always 0
  */
 
+#include <stdio.h>
+
 int main(void)
 {
-unsigned long fib1 = 1, fib2 = 2, temp;
-int count = 2;
+int a = 1, b = 2, next, count;
 
-printf("%lu, %lu", fib1, fib2);
+printf("%d, %d", a, b);
 
-while (count < 98)
+for (count = 3; count <= 98; ++count)
 {
-temp = fib2;
-fib2 = fib1 + fib2;
-fib1 = temp;
-
-printf(", %lu", fib2);
-
-count++;
+next = a + b;
+if (next > 0)
+printf(", %d", next);
+else
+printf(", %d", next * -1);
+a = b;
+b = next;
 }
 
 printf("\n");
 
 return (0);
 }
-
