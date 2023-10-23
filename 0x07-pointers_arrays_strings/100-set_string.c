@@ -14,13 +14,18 @@
 
 void set_string(char **s, char *to)
 {
-	*s = malloc((strlen(to) + 1) * sizeof(char));
+	int i, length;
 
-	if (*s == NULL)
+	length = 0;
+	while (to[length] != '\0')
 	{
-		fprintf(stderr, "Memory allocation failed\n");
-		exit(EXIT_FAILURE);
+		length++;
 	}
 
-	strcpy(*s, to);
+	*s = (char *)malloc((length + 1) * sizeof(char));
+
+	for (i = 0; i <= length; i++)
+	{
+		(*s)[i] = to[i];
+	}
 }
