@@ -7,37 +7,6 @@
  * @n: Amount for which coins need to be calculated
  * Return: Number of coins
  */
-int calculate_coins(int n);
-
-/**
- * main - Entry point
- * @argc: Number of arguments
- * @argv: Array of argument strings
- * Return: 0 if successful, 1 if error
- */
-int main(int argc, char *argv[])
-{
-	int n, coins = 0;
-
-	if (argc != 2)
-	{
-		printf("Error\n");
-		return (1);
-	}
-
-	n = atoi(argv[1]);
-	if (n <= 0)
-	{
-		printf("0\n");
-	}
-	else
-	{
-		coins = calculate_coins(n);
-		printf("%d\n", coins);
-	}
-
-	return (0);
-}
 
 int calculate_coins(int n)
 {
@@ -72,6 +41,36 @@ int calculate_coins(int n)
 		}
 	}
 
-	return coins;
+	return (coins);
+}
+
+/**
+ * main - Entry point
+ * @argc: Number of arguments
+ * @argv: Array of argument strings
+ * Return: 0 if successful, 1 if error
+ */
+int main(int argc, char *argv[])
+{
+	int n, coins = 0;
+
+	if (argc != 2)
+	{
+		printf("Error\n");
+		return (1);
+	}
+
+	n = atoi(argv[1]);
+	if (n <= 0)
+	{
+		printf("0\n");
+	}
+	else
+	{
+		coins = calculate_coins(n);
+		printf("%d\n", coins);
+	}
+
+	return (0);
 }
 
