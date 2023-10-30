@@ -34,42 +34,38 @@ char *str_concat(char *s1, char *s2)
 	char *concat_str;
 
 	if (s1 == NULL && s2 == NULL)
-	{
 		concat_str = malloc(sizeof(char) * 1);
-		return (concat_str);
-	}
 
-	if (s1 == NULL)
+	else if (s1 == NULL)
 	{
 		len2 = _strlen(s2);
 		concat_str = malloc(sizeof(char) * (len2 + 1));
 		for (i = 0; i < len2; i++)
 			concat_str[i] = s2[i];
-
-		return (concat_str);
 	}
 
-	if (s2 == NULL)
+	else if (s2 == NULL)
 	{
 		len1 = _strlen(s1);
 		concat_str = malloc(sizeof(char) * (len1 + 1));
 		for (i = 0; i < len1; i++)
 			concat_str[i] = s1[i];
-
-		return (concat_str);
 	}
 
-	len1 = _strlen(s1);
-	len2 = _strlen(s2);
-	concat_str = malloc(sizeof(char) * (len1 + len2 + 1));
+	else
+	{
+		len1 = _strlen(s1);
+		len2 = _strlen(s2);
+		concat_str = malloc(sizeof(char) * (len1 + len2 + 1));
+
+		for (i = 0; i < len1; i++)
+			concat_str[i] = s1[i];
+
+		for (j = 0; j < len2; j++, i++)
+			concat_str[i] = s2[j];
+	}
+
 	if (concat_str == NULL)
 		return (NULL);
-
-	for (i = 0; i < len1; i++)
-		concat_str[i] = s1[i];
-
-	for (j = 0; j < len2; j++, i++)
-		concat_str[i] = s2[j];
-
 	return (concat_str);
 }
