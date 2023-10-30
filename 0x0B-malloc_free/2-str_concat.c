@@ -30,42 +30,21 @@ int _strlen(char *s)
 
 char *str_concat(char *s1, char *s2)
 {
-	int len1, len2, i, j;
-	char *concat_str;
+	int len1 = (s1 != NULL) ? _strlen(s1) : 0;
+	int len2 = (s2 != NULL) ? _strlen(s2) : 0;
+	int total_len = len1 + len2;
+	int i, j;
 
-	if (s1 == NULL && s2 == NULL)
-		concat_str = malloc(sizeof(char) * 1);
+	char *concatenated = malloc(sizeof(char) * (total_len + 1));
 
-	else if (s1 == NULL)
-	{
-		len2 = _strlen(s2);
-		concat_str = malloc(sizeof(char) * (len2 + 1));
-		for (i = 0; i < len2; i++)
-			concat_str[i] = s2[i];
-	}
-
-	else if (s2 == NULL)
-	{
-		len1 = _strlen(s1);
-		concat_str = malloc(sizeof(char) * (len1 + 1));
-		for (i = 0; i < len1; i++)
-			concat_str[i] = s1[i];
-	}
-
-	else
-	{
-		len1 = _strlen(s1);
-		len2 = _strlen(s2);
-		concat_str = malloc(sizeof(char) * (len1 + len2 + 1));
-
-		for (i = 0; i < len1; i++)
-			concat_str[i] = s1[i];
-
-		for (j = 0; j < len2; j++, i++)
-			concat_str[i] = s2[j];
-	}
-
-	if (concat_str == NULL)
+	if (concatenated == NULL)
 		return (NULL);
-	return (concat_str);
+
+	for (i = 0; i < len1; i++)
+		concatenated[i] = s1[i];
+
+	for (j = 0; j < len2; j++, i++)
+		concatenated[i] = s2[j];
+
+	return (concatenated);
 }
