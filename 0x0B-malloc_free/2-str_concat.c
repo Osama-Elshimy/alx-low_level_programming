@@ -34,7 +34,10 @@ char *str_concat(char *s1, char *s2)
 	char *concat_str;
 
 	if (s1 == NULL && s2 == NULL)
-		return (NULL);
+	{
+		concat_str = malloc(sizeof(char) * 1);
+		return (concat_str);
+	}
 
 	if (s1 == NULL)
 	{
