@@ -1,76 +1,137 @@
 #include <ctype.h>
 #include <stdlib.h>
-#include <string.h>
 
 /**
- * strtow - splits a string into words
- * @str: string to split
- * Description: splits a string into words, each element of the array should
- * contain a single word, null-termintated
+ * get_word_count - count words from string
+ * @str: string
  *
- * Return: NULL if str == NULL or str == "", otherwise
- * pointer to array of words
+ * Return: word count
  */
 
-char **strtow(char *str)
+int get_word_count(char *str)
 {
-	char **words;
-	int i = 0, j = 0, k, letters, spaces = 0;
-	int first_letter;
-
-	if (str == NULL || *str == '\0')
-		return (NULL);
+	int count = 0, i = 0;
 
 	while (str[i])
 	{
 		if (isspace(str[i]))
-			i++;
-		else if (!isspace(str[i]))
 		{
-			spaces++;
-
-			while (!isspace(str[i]) && str[i] != '\0')
-				i++;
+			i++;
+			continue;
 		}
+
+		count++;
+
+		while (str[i] && !isspace(str[i]))
+			i++;
 	}
 
-	words = malloc(sizeof(char *) * (spaces + 1));
-	if (words == NULL)
-		return (NULL);
+	return (count);
+}
 
-	for (i = 0; i < spaces; i++)
+/**
+ * get_word - get word position and length
+ *
+ * @str: string
+ * @word_pos: position pointer
+ * @word_len: length pointer
+ */
+
+void get_word(char *str, int *word_pos, int *word_len)
+{
+	static int str_pos;
+	int pos, len = 0;
+
+	while (str[str_pos])
 	{
-		for (; str[j] != '\0'; j++)
+		if (isspace(str[str_pos]))
 		{
-			if (!isspace(str[j]))
-			{
-				first_letter = j;
-				letters = 0;
-				while (!isspace(str[j]))
-				{
-					letters++;
-					j++;
-				}
-				break;
-			}
+			str_pos++;
+			continue;
 		}
 
-		words[i] = malloc(sizeof(char) * (letters + 1));
-		if (words[i] == NULL)
-		{
-			for (k = 0; k < i; k++)
-				free(words[k]);
+		pos = str_pos;
 
-			free(words);
+		while (str[str_pos] && !isspace(str[str_pos]))
+		{
+			len++;
+			str_pos++;
+		}
+		break;
+	}
+
+	*word_pos = pos;
+	*word_len = len;
+}
+
+/**
+ * push_word - push word to array
+ *
+ * @array: array
+ * @index: array index
+ * @str: string
+ * @word_pos: word position
+ * @word_len: word length
+ */
+
+void push_word(char **array, int index, char *str, int word_pos, int word_len)
+{
+	int i, j = 0;
+
+	for (i = word_pos; i < word_len + word_pos; i++, j++)
+		array[index][j] = str[i];
+
+	array[index][j] = '\0';
+}
+
+/**
+ * strtow - convert string to array of words
+ *
+ * @str: string
+ *
+ * Return: pointer to array
+ */
+
+char **strtow(char *str)
+{
+	char **array;
+	int words_count;
+	int word_len;
+	int word_pos;
+	int i, j;
+
+	if (str == NULL)
+		return (NULL);
+
+	words_count = get_word_count(str);
+
+	if (words_count == 0)
+		return (NULL);
+
+	array = malloc(sizeof(char *) * (words_count + 1));
+
+	if (array == NULL)
+		return (NULL);
+
+	for (i = 0; i < words_count; i++)
+	{
+		get_word(str, &word_pos, &word_len);
+
+		array[i] = (char *)malloc(word_len + 1);
+
+		if (array[i] == NULL)
+		{
+			for (j = 0; j < i; j++)
+				free(array[j]);
+
+			free(array);
 			return (NULL);
 		}
 
-		for (k = first_letter; !isspace(str[k]); k++)
-			words[i][k - first_letter] = str[k];
-
-		words[i][k - first_letter] = '\0';
+		push_word(array, i, str, word_pos, word_len);
 	}
 
-	words[i] = NULL;
-	return (words);
+	array[i] = NULL;
+
+	return (array);
 }
