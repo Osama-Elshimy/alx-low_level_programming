@@ -15,16 +15,23 @@
 char **strtow(char *str)
 {
 	char **words;
-	int i, j = 0, k, letters, spaces = 0;
+	int i = 0, j = 0, k, letters, spaces = 0;
 	int first_letter;
 
 	if (str == NULL || *str == '\0')
 		return (NULL);
 
-	for (i = 0; str[i + 1] != '\0'; i++)
+	while (str[i])
 	{
-		if (!isspace(str[i]) && isspace(str[i + 1]))
+		if (isspace(str[i]))
+			i++;
+		else if (!isspace(str[i]))
+		{
 			spaces++;
+
+			while (!isspace(str[i]) && str[i] != '\0')
+				i++;
+		}
 	}
 
 	words = malloc(sizeof(char *) * (spaces + 1));
@@ -33,13 +40,13 @@ char **strtow(char *str)
 
 	for (i = 0; i < spaces; i++)
 	{
-		for (; str[j + 1] != '\0'; j++)
+		for (; str[j] != '\0'; j++)
 		{
-			if (isspace(str[j]) && !isspace(str[j + 1]))
+			if (!isspace(str[j]))
 			{
-				first_letter = j + 1;
+				first_letter = j;
 				letters = 0;
-				while (!isspace(str[j + 1]))
+				while (!isspace(str[j]))
 				{
 					letters++;
 					j++;
