@@ -25,7 +25,7 @@ char *argstostr(int ac, char **av)
 	if (concat_str == NULL)
 		return (NULL);
 
-	for (i = 0; i < len + ac; i++)
+	for (i = 0; i < ac; i++)
 	{
 		strcat(concat_str, av[i]);
 		strcat(concat_str, "\n");
