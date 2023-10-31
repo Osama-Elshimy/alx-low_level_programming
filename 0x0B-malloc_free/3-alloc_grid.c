@@ -27,13 +27,13 @@ int **alloc_grid(int width, int height)
 	for (i = 0; i < height; i++)
 	{
 		/* Allocate memory for columns */
-		grid = (int **)malloc(sizeof(int *) * height);
 		grid[i] = (int *)malloc(sizeof(int) * width);
 		if (grid[i] == (NULL))
 		{
 			/* Free previously allocated memory on failure */
 			for (j = 0; j < i; j++)
 				free(grid[j]);
+
 			free(grid);
 			return (NULL);
 		}
