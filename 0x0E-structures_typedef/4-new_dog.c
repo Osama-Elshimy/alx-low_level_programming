@@ -1,14 +1,39 @@
 #include "dog.h"
 #include <stdlib.h>
-#include <string.h>
 
 /**
- * new_dog - creates a new dog
- * @name: name of the dog
- * @age: age of the dog
- * @owner: owner of the dog
+ * copy_string - Copies a string to a new memory location
+ * @src: Pointer to the source string
  *
- * Return: NULL if fails or a pointer to the new dog
+ * Return: Pointer to the new string
+ */
+
+char *copy_string(char *src)
+{
+	char *dest;
+	int length = 0, i;
+
+	while (src[length] != '\0')
+		length++;
+
+	dest = malloc(length + 1);
+	if (dest == NULL)
+
+		return (NULL);
+
+	for (i = 0; i <= length; i++)
+		dest[i] = src[i];
+
+	return (dest);
+}
+
+/**
+ * new_dog - Creates a new dog
+ * @name: Name of the dog
+ * @age: Age of the dog
+ * @owner: Owner of the dog
+ *
+ * Return: Pointer to the new dog
  */
 
 dog_t *new_dog(char *name, float age, char *owner)
@@ -18,9 +43,8 @@ dog_t *new_dog(char *name, float age, char *owner)
 	if (new_dog == NULL)
 		return (NULL);
 
-	new_dog->name = strdup(name);
-	new_dog->age = age;
-	new_dog->owner = strdup(owner);
+	new_dog->name = copy_string(name);
+	new_dog->owner = copy_string(owner);
 
 	if (new_dog->name == NULL || new_dog->owner == NULL)
 	{
@@ -30,5 +54,8 @@ dog_t *new_dog(char *name, float age, char *owner)
 		return (NULL);
 	}
 
+	new_dog->age = age;
+
 	return (new_dog);
 }
+
