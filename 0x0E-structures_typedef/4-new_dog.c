@@ -18,7 +18,6 @@ char *copy_string(char *src)
 
 	dest = malloc(length + 1);
 	if (dest == NULL)
-
 		return (NULL);
 
 	for (i = 0; i <= length; i++)
